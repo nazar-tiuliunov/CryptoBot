@@ -1,13 +1,15 @@
 import asyncio
 import logging
-import sqlite3
 import os
-
 from aiogram import Bot, Dispatcher
-from binance.client import Client
 
 from db.base import create_table, get_connection
-from handlers import register_handlers, callback_handler
+from handlers import (start_handler,
+                      callback_handler,
+                      user_profile_callback_handler,
+                      top_list_callback_handler,
+                      forever_currency_list_callback_handler)
+from services.binance_api import get_client
 
 
 async def main():
@@ -15,14 +17,16 @@ async def main():
 
     bot = Bot(token=os.getenv('BOT_TOKEN'))
     dp = Dispatcher()
-    client = Client(api_key=os.getenv('BINANCE_API_KEY'),
-                    api_secret=os.getenv('BINANCE_SECRET_KEY'))
-    con = sqlite3.connect("database.db")
+    con = get_connection()
+    client = await get_client()
 
     create_table(get_connection())
 
-    register_handlers(dp)
-    callback_handler(dp)
+    dp.include_routers(start_handler.router,
+                       callback_handler.router,
+                       user_profile_callback_handler.router,
+                       top_list_callback_handler.router,
+                       forever_currency_list_callback_handler.router)
 
     await dp.start_polling(bot, skip_updates=True, con=con, client=client)
 
