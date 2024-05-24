@@ -1,8 +1,8 @@
 import asyncio
 import logging
 import sqlite3
-
 import os
+
 from aiogram import Bot, Dispatcher
 from binance.client import Client
 

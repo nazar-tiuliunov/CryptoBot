@@ -38,3 +38,9 @@ def get_favorite_pairs(user_id, con):
     cursor.execute("SELECT favorite_pairs FROM users WHERE user_id=?", (user_id,))
     result = cursor.fetchone()
     return result[0] if result else None
+
+
+def set_favorite_pairs(user_id, favorite_pairs, con):
+    cursor = con.cursor()
+    cursor.execute("UPDATE users SET favorite_pairs=? WHERE user_id=?", (favorite_pairs, user_id))
+    con.commit()
