@@ -19,7 +19,6 @@ class RegisterCheck(BaseMiddleware):
     ) -> Any:
         user = event.from_user
         if get_user_by_id(user.id, con=data['con']) is None:
-            create_user(user.id, con=data['con'])
+            create_user(user.id, user.username, user.first_name, con=data['con'])
             await data['bot'].send_message(user.id, 'You are registered!')
-
         return await handler(event, data)
