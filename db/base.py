@@ -1,6 +1,10 @@
 import sqlite3
 
 
+def get_connection():
+    return sqlite3.connect('database.db')
+
+
 def create_table(con):
     cursor = con.cursor()
     cursor.execute("""
@@ -9,8 +13,7 @@ def create_table(con):
                 user_id INTEGER UNIQUE,
                 username VARCHAR(32),
                 user_first_name VARCHAR(32),
-                selected_pairs TEXT,
-                favorite_pair TEXT,
+                favorite_pairs TEXT,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         """)
@@ -28,3 +31,10 @@ def get_user_by_id(user_id, con):
     cursor = con.cursor()
     cursor.execute("SELECT * FROM users WHERE user_id=?", (user_id,))
     return cursor.fetchone()
+
+
+def get_favorite_pairs(user_id, con):
+    cursor = con.cursor()
+    cursor.execute("SELECT favorite_pairs FROM users WHERE user_id=?", (user_id,))
+    result = cursor.fetchone()
+    return result[0] if result else None
