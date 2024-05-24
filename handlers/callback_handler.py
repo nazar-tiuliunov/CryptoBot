@@ -2,6 +2,8 @@ from typing import Dict, Any
 
 import requests
 from aiogram import types
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 from db.base import get_favorite_pairs, get_connection
 from utils import get_main_menu_keyboard
@@ -17,14 +19,22 @@ async def func_fav_currencies(callback: types.CallbackQuery):
     fav_pairs = get_favorite_pairs(callback.from_user.id, con=get_connection())
     if fav_pairs is None:
         kb = [
-            [types.InlineKeyboardButton(text='Add favorite currencies', callback_data='back')],
+            [types.InlineKeyboardButton(text='Add favorite currencies', callback_data='add_fav_pairs')],
             [types.InlineKeyboardButton(text='⬅️ Back', callback_data='back')],
         ]
         await callback.message.edit_text('You have not added any favorite currencies yet!',
                                          reply_markup=types.InlineKeyboardMarkup(inline_keyboard=kb))
         return
-    kb = get_back_keyboard()
-    await callback.message.edit_text('Favorite currencies', reply_markup=kb)
+    pairs = fav_pairs.split(',')
+    pairs = [x.strip().upper() for x in pairs]
+    print(pairs)
+
+    builder = InlineKeyboardBuilder()
+    for pair in pairs:
+        button = InlineKeyboardButton(text=pair, callback_data=f"fav_currency:{pair}")
+        builder.row(button)
+    builder.row(InlineKeyboardButton(text='⬅️ Back', callback_data='back'))
+    await callback.message.edit_text('Favorite currencies', reply_markup=builder.as_markup())
 
 
 async def func_top_50(callback: types.CallbackQuery):
