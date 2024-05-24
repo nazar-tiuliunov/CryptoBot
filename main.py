@@ -7,7 +7,7 @@ from binance.client import Client
 import os
 
 from db.base import create_table
-from handlers import register_handlers
+from handlers import register_handlers, callback_handler
 
 
 async def main():
@@ -19,7 +19,9 @@ async def main():
     con = sqlite3.connect("database.db")
 
     create_table(con)
+
     register_handlers(dp)
+    callback_handler(dp)
 
     await dp.start_polling(bot, skip_updates=True, con=con, client=client)
 
