@@ -1,4 +1,4 @@
-__all__ = ['register_handlers']
+__all__ = ['register_handlers', 'callback_handler']
 
 from aiogram import Router
 from aiogram.filters import CommandStart
