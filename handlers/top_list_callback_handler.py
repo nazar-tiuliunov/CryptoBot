@@ -17,9 +17,6 @@ async def get_top_list_currency(callback: types.CallbackQuery):
 
         Args:
             callback (types.CallbackQuery): The callback query triggering the handler.
-
-        Returns:
-            None
     """
     top_50 = get_top_list.main()
     kb = get_back_keyboard()

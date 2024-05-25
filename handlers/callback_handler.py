@@ -1,6 +1,7 @@
 """
 Module containing a router and callback handler.
 """
+
 from aiogram import Router, F, types
 from utils import get_main_menu_keyboard
 
@@ -14,9 +15,6 @@ async def to_back(callback: types.CallbackQuery):
 
         Args:
             callback (types.CallbackQuery): The callback query triggering the handler.
-
-        Returns:
-            None
     """
     user_first_name = callback.from_user.first_name
     kb = get_main_menu_keyboard()

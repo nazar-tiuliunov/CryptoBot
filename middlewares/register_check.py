@@ -1,6 +1,7 @@
 """
 Module containing a middleware for user registration check.
 """
+
 from typing import Callable, Dict, Any, Awaitable, Union
 
 from aiogram import BaseMiddleware
@@ -13,7 +14,6 @@ class RegisterCheck(BaseMiddleware):
     """
         Middleware to check user registration and register them if necessary.
     """
-
     def __init__(self):
         pass
 
