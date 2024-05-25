@@ -14,7 +14,7 @@ from states.states import AddFavCurrenciesStates
 router = Router()
 
 
-@router.callback_query(F.data == 'forever_user_list')
+@router.callback_query(F.data == 'favorite_user_list')
 async def forever_currency_list(callback: types.CallbackQuery):
     pairs = get_forever_list(callback.from_user.id)
     builder = InlineKeyboardBuilder()
@@ -39,7 +39,7 @@ async def delete_currency(callback: types.CallbackQuery, state: FSMContext):
     user_data = await state.get_data()
     result = send_request_for_delete_pair(callback.from_user.id, user_data.get('symbol'))
     builder = InlineKeyboardBuilder()
-    builder.row(InlineKeyboardButton(text='View forever list', callback_data='forever_user_list'))
+    builder.row(InlineKeyboardButton(text='View favorite list', callback_data='favorite_user_list'))
     builder.row(InlineKeyboardButton(text='Main menu', callback_data='back'))
     if result is True:
         await callback.message.edit_text('Currency deleted successfully!', reply_markup=builder.as_markup())
@@ -57,7 +57,7 @@ async def process_add_favorite_currency_request(message: types.Message, state: F
     result = send_request_for_add_new_pair(message.from_user.id, message.text)
     await state.clear()
     builder = InlineKeyboardBuilder()
-    builder.row(InlineKeyboardButton(text='View forever list', callback_data='forever_user_list'))
+    builder.row(InlineKeyboardButton(text='View favorite list', callback_data='favorite_user_list'))
     builder.row(InlineKeyboardButton(text='Add new pair', callback_data='add_favorite_pairs'))
     builder.row(InlineKeyboardButton(text='Main menu', callback_data='back'))
     if result is True:
@@ -78,7 +78,7 @@ async def forever_currency_description(callback: types.CallbackQuery, state: FSM
         result = None
     builder = InlineKeyboardBuilder()
     builder.row(InlineKeyboardButton(text='Delete this currency', callback_data='delete_currency'))
-    builder.row(InlineKeyboardButton(text='Back to forever list', callback_data='forever_user_list'))
+    builder.row(InlineKeyboardButton(text='Back to favorite list', callback_data='favorite_user_list'))
     builder.row(InlineKeyboardButton(text='Main menu', callback_data='back'))
     if result is not None:
         await callback.message.edit_text(f"Currency: {symbol}\n\n"
