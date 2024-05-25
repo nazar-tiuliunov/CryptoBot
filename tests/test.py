@@ -5,7 +5,6 @@ Module containing test cases for the bot.
 from unittest.mock import patch, AsyncMock, MagicMock
 import pytest
 
-from aiogram import types
 
 from handlers.callback_handler import to_back
 from utils import get_main_menu_keyboard
@@ -163,7 +162,6 @@ class TestBinanceTop50:
     """
         Test cases for getting top 50 currencies from Binance.
     """
-    @pytest.mark.asyncio
     @patch('requests.get')
     def test_main_success(self, mock_get):
         """
