@@ -1,10 +1,4 @@
-pytest
-pytest-timeout 
-pylint>=2.13 
-jupyter
-ipython 
-numpy>=1.23.5
-pandas
-matplotlib
-pillow  
-opencv-python-headless
+aiogram~=3.6.0
+binance~=0.3
+requests~=2.32.2
+pytest~=8.2.1
