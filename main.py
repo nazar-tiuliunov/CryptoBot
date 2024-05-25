@@ -1,3 +1,6 @@
+"""
+This script is responsible for running the Telegram bot.
+"""
 import asyncio
 import logging
 import os
@@ -13,6 +16,17 @@ from services.binance_api import get_client
 
 
 async def main():
+    """
+        Main function to start the bot.
+
+        Sets up logging configuration, initializes the bot and dispatcher,
+        creates a connection to the database, gets the Binance client,
+        creates necessary tables in the database, includes required handlers,
+        and starts the bot to receive updates.
+
+        Raises:
+            Exception: If an error occurs during execution.
+    """
     logging.basicConfig(level=logging.INFO)
 
     bot = Bot(token=os.getenv('BOT_TOKEN'))
