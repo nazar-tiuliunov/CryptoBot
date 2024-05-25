@@ -7,7 +7,7 @@ def get_main_menu_keyboard():
             types.InlineKeyboardButton(text='👤 My Account', callback_data='my_account'),
         ],
         [
-            types.InlineKeyboardButton(text='⭐️ Favorite currencies', callback_data='forever_user_list'),
+            types.InlineKeyboardButton(text='⭐️ Favorite currencies', callback_data='favorite_user_list'),
             types.InlineKeyboardButton(text='🔝 Top 50 currencies ', callback_data='top_list'),
         ],
     ]

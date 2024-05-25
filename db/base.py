@@ -16,7 +16,6 @@ def create_table(con):
                 user_id INTEGER UNIQUE,
                 username VARCHAR(32),
                 user_first_name VARCHAR(32),
-                favorite_pairs TEXT,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         """)
