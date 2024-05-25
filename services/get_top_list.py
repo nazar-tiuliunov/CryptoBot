@@ -1,6 +1,7 @@
 """
 Module containing a function to retrieve the top 50 cryptocurrencies from the Binance API.
 """
+
 import requests
 
 

@@ -1,6 +1,7 @@
 """
 Module containing routes and handlers for starting the bot.
 """
+
 from aiogram import Router, types
 from aiogram.filters import CommandStart, StateFilter
 from aiogram.fsm.context import FSMContext
@@ -21,9 +22,6 @@ async def start_cmd(message: types.Message, state: FSMContext):
         Args:
             message (types.Message): The message containing the /start command.
             state (FSMContext): The FSM context.
-
-        Returns:
-            None
     """
     await state.clear()
     user_first_name = message.from_user.first_name

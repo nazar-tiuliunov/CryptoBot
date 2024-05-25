@@ -28,7 +28,7 @@ async def get_account_info():
             dict: Account information.
     """
     client = await get_client()
-    account_info = await client.get_account()
+    account_info = client.get_account()
     return account_info
 
 

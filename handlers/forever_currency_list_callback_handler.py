@@ -25,9 +25,6 @@ async def forever_currency_list(callback: types.CallbackQuery):
 
         Args:
             callback (types.CallbackQuery): The callback query triggering the handler.
-
-        Returns:
-            None
     """
     pairs = get_forever_list(callback.from_user.id)
     builder = InlineKeyboardBuilder()
@@ -48,9 +45,6 @@ async def add_favorite_pairs(callback: types.CallbackQuery, state: FSMContext):
         Args:
             callback (types.CallbackQuery): The callback query triggering the handler.
             state (FSMContext): The FSM context.
-
-        Returns:
-            None
     """
     await callback.message.edit_text("Enter the currency pair you want to add\n\n"
                                      "(e.g. BTC, or ETH, etc.)")
@@ -65,9 +59,6 @@ async def delete_currency(callback: types.CallbackQuery, state: FSMContext):
         Args:
             callback (types.CallbackQuery): The callback query triggering the handler.
             state (FSMContext): The FSM context.
-
-        Returns:
-            None
     """
     user_data = await state.get_data()
     result = send_request_for_delete_pair(callback.from_user.id, user_data.get('symbol'))
@@ -89,9 +80,6 @@ async def process_add_favorite_currency_request(message: types.Message, state: F
         Args:
             message (types.Message): The message containing the user's input.
             state (FSMContext): The FSM context.
-
-        Returns:
-            None
     """
     if re.match(r'^[A-Z]{2,4}$', message.text) is None:
         await message.answer('Invalid currency pair! Please, try again')
@@ -117,9 +105,6 @@ async def forever_currency_description(callback: types.CallbackQuery, state: FSM
         Args:
             callback (types.CallbackQuery): The callback query triggering the handler.
             state (FSMContext): The FSM context.
-
-        Returns:
-            None
     """
     symbol = callback.data.split(':')[1]
     await state.set_data({"symbol": symbol})

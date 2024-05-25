@@ -1,6 +1,7 @@
 """
 Module containing functions for interacting with favorite currency pairs in the database.
 """
+
 from db.base import get_connection, get_favorite_pairs, add_new_favorite_pair, delete_favorite_pair
 
 
