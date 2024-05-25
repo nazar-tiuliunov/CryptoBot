@@ -1,3 +1,8 @@
+"""
+Module containing routes and handlers for user profile related actions.
+"""
+
+
 from aiogram import types, Router, F
 
 from services.binance_api import get_account_info, get_client, get_info_currency
@@ -8,6 +13,15 @@ router = Router()
 
 @router.callback_query(F.data == 'my_account')
 async def user_profile(callback: types.CallbackQuery):
+    """
+        Callback handler to retrieve and display user account information.
+
+        Args:
+            callback (types.CallbackQuery): The callback query triggering the handler.
+
+        Returns:
+            None
+    """
     client = await get_client()
     info = await get_account_info()
     msg_text = ""

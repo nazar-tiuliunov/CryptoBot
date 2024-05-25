@@ -1,3 +1,7 @@
+"""
+Module containing routes and callback handlers for working with favorite currency pairs.
+"""
+
 import re
 
 from aiogram import Router, F, types
@@ -16,6 +20,15 @@ router = Router()
 
 @router.callback_query(F.data == 'favorite_user_list')
 async def forever_currency_list(callback: types.CallbackQuery):
+    """
+        Callback handler to display the list of favorite currency pairs for a user.
+
+        Args:
+            callback (types.CallbackQuery): The callback query triggering the handler.
+
+        Returns:
+            None
+    """
     pairs = get_forever_list(callback.from_user.id)
     builder = InlineKeyboardBuilder()
     if pairs:
@@ -29,6 +42,16 @@ async def forever_currency_list(callback: types.CallbackQuery):
 
 @router.callback_query(F.data == 'add_favorite_pairs')
 async def add_favorite_pairs(callback: types.CallbackQuery, state: FSMContext):
+    """
+        Callback handler to initiate adding a new favorite currency pair.
+
+        Args:
+            callback (types.CallbackQuery): The callback query triggering the handler.
+            state (FSMContext): The FSM context.
+
+        Returns:
+            None
+    """
     await callback.message.edit_text("Enter the currency pair you want to add\n\n"
                                      "(e.g. BTC, or ETH, etc.)")
     await state.set_state(AddFavCurrenciesStates.waiting_for_enter)
@@ -36,6 +59,16 @@ async def add_favorite_pairs(callback: types.CallbackQuery, state: FSMContext):
 
 @router.callback_query(F.data == 'delete_currency')
 async def delete_currency(callback: types.CallbackQuery, state: FSMContext):
+    """
+        Callback handler to delete a favorite currency pair.
+
+        Args:
+            callback (types.CallbackQuery): The callback query triggering the handler.
+            state (FSMContext): The FSM context.
+
+        Returns:
+            None
+    """
     user_data = await state.get_data()
     result = send_request_for_delete_pair(callback.from_user.id, user_data.get('symbol'))
     builder = InlineKeyboardBuilder()
@@ -50,6 +83,16 @@ async def delete_currency(callback: types.CallbackQuery, state: FSMContext):
 
 @router.message(AddFavCurrenciesStates.waiting_for_enter)
 async def process_add_favorite_currency_request(message: types.Message, state: FSMContext):
+    """
+        Handler to process the request to add a new favorite currency pair.
+
+        Args:
+            message (types.Message): The message containing the user's input.
+            state (FSMContext): The FSM context.
+
+        Returns:
+            None
+    """
     if re.match(r'^[A-Z]{2,4}$', message.text) is None:
         await message.answer('Invalid currency pair! Please, try again')
         await state.set_state(AddFavCurrenciesStates.waiting_for_enter)
@@ -68,6 +111,16 @@ async def process_add_favorite_currency_request(message: types.Message, state: F
 
 @router.callback_query(F.data.startswith('fav_currency:'))
 async def forever_currency_description(callback: types.CallbackQuery, state: FSMContext):
+    """
+        Callback handler to display information about a specific favorite currency pair.
+
+        Args:
+            callback (types.CallbackQuery): The callback query triggering the handler.
+            state (FSMContext): The FSM context.
+
+        Returns:
+            None
+    """
     symbol = callback.data.split(':')[1]
     await state.set_data({"symbol": symbol})
     print(symbol)
