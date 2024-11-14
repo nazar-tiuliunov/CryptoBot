@@ -1,6 +1,7 @@
 # CryptoBot
 
 CryptoBot is a Python-based cryptocurrency bot that interacts with the Binance.
+This university project was migrated from private GitLab repository.
 
 ## Features
 
@@ -37,10 +38,6 @@ BOT_TOKEN=your_bot_token
 ```
 3.Add the .env file to the configuration of the main.py file
 ![img.png](img.png)
-
-## Usage
-Or you can use the bot at this link:
-`@tiulinaz_bot`
 
 ## Running Tests
 To run the tests from the CLI, use the following command:
